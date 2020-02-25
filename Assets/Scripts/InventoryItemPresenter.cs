@@ -18,7 +18,6 @@ public class InventoryItemPresenter : MonoBehaviour, IBeginDragHandler, IDragHan
     {
         _draggingParent = draggingParent;
         _originalParent = transform.parent;
-        //_inventoryGridRectTransform = (RectTransform)_originalParent.parent;
     }
 
     public void Render(IItem item)
@@ -39,7 +38,9 @@ public class InventoryItemPresenter : MonoBehaviour, IBeginDragHandler, IDragHan
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (In((RectTransform)_originalParent.parent)) //мы используем RectTransform (который размером с весь инвентарь) родительского элемента Content (который размером с совокупность размеров объектов InventoryItemPresenter)
+        //мы используем RectTransform (который размером с весь инвентарь) родительского элемента Content (который размером с совокупность размеров объектов InventoryItemPresenter)
+        RectTransform inventoryGridRectTransform = (RectTransform)_originalParent.parent;
+        if (In(inventoryGridRectTransform))
         {
             InsertInInventoryGrid();
         }
@@ -74,14 +75,4 @@ public class InventoryItemPresenter : MonoBehaviour, IBeginDragHandler, IDragHan
     {
         return rectTransform.rect.Contains(transform.position);
     }
-
-    //private void Update()
-    //{
-    //    Rect rect = ((RectTransform)_originalParent).rect;
-        
-    //    Debug.DrawLine(new Vector3(rect.xMin, rect.yMin), new Vector3(rect.xMin, rect.yMax));
-    //    Debug.DrawLine(new Vector3(rect.xMax, rect.yMin), new Vector3(rect.xMax, rect.yMax));
-    //    Debug.DrawLine(new Vector3(rect.xMin, rect.yMin), new Vector3(rect.xMax, rect.yMin));
-    //    Debug.DrawLine(new Vector3(rect.xMin, rect.yMax), new Vector3(rect.xMax, rect.yMax));
-    //}
 }
