@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private InventoryItemPresenter _inventoryItemPresenter;
     [SerializeField] private Transform _container;
     [SerializeField] private Transform _draggingParent;
+    [SerializeField] private ItemsEjector _ejector;
 
     private void OnEnable()
     {
@@ -27,6 +28,7 @@ public class Inventory : MonoBehaviour
             itemPresenter.Render(item);
 
             itemPresenter.Ejecting += () => Destroy(itemPresenter.gameObject);
+            itemPresenter.Ejecting += () => _ejector.EjectFromPool(item, itemPresenter.transform.position, -_ejector.transform.up); //itemPresenter.transform.position - место где мы отпустили InventoryItemPresenter
         });
     }
 }

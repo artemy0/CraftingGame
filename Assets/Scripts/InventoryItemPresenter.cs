@@ -12,12 +12,13 @@ public class InventoryItemPresenter : MonoBehaviour, IBeginDragHandler, IDragHan
 
     private Transform _draggingParent;
     private Transform _originalParent;
-    //private RectTransform _inventoryGridRectTransform;
+    private RectTransform _inventoryRectTransform;
 
     public void Init(Transform draggingParent)
     {
         _draggingParent = draggingParent;
         _originalParent = transform.parent;
+        _inventoryRectTransform = (RectTransform)_originalParent.parent;
     }
 
     public void Render(IItem item)
@@ -38,9 +39,7 @@ public class InventoryItemPresenter : MonoBehaviour, IBeginDragHandler, IDragHan
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //мы используем RectTransform (который размером с весь инвентарь) родительского элемента Content (который размером с совокупность размеров объектов InventoryItemPresenter)
-        RectTransform inventoryGridRectTransform = (RectTransform)_originalParent.parent;
-        if (In(inventoryGridRectTransform))
+        if (In(_inventoryRectTransform))
         {
             InsertInInventoryGrid();
         }
